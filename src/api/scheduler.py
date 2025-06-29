@@ -1,7 +1,7 @@
 import datetime
 import asyncio
 import httpx
-from fastapi import APIRouter
+from fastapi import APIRouter, Body
 from src.database import scheduler_collection
 from src.schemas.notice import NoticeSchema
 
@@ -19,8 +19,8 @@ async def start_scheduler():
         scheduler_status = True
 
 
-@router.post('/schedule/', summary="Get notice and schedule it.")
-async def schedule(notice: NoticeSchema):
+@router.post('/get_schedule/', summary="Get notice.")
+async def get_schedule(notice: NoticeSchema):
     notice_data = {
         "body": notice.body,
         "type": notice.type,
@@ -28,8 +28,13 @@ async def schedule(notice: NoticeSchema):
         "status": notice.status
     }
 
-    db = scheduler_collection
-    await db.insert_one(notice_data)
+    async with httpx.AsyncClient() as client:
+        await client.post("http://127.0.0.1:8001/schedule/", json=notice_data)
+
+
+@router.post('/schedule/', summary="Schedule notice.")
+async def schedule(notice_data: dict = Body(...)):
+    await scheduler_collection.insert_one(notice_data)
 
     return {"message": "Scheduled."}
 
