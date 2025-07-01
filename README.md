@@ -1,5 +1,5 @@
-﻿# scheduler-api
-This project was made to support email-notification-api. The project is using FastAPI as a backend framework and PostgreSQL as a database management system.
+﻿# SchedulerApi
+This project was made to support email-notification-api. The project is using FastAPI as a backend framework and MongoDB as a database management system.
 # Techonology Stack
 - Python 3.11;
 - FastAPI;
