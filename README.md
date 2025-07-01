@@ -1,4 +1,4 @@
-﻿# SchedulerApi
+﻿# Scheduler Api
 This project was made to support email-notification-api. The project is using FastAPI as a backend framework and MongoDB as a database management system.
 # Techonology Stack
 - Python 3.11;
